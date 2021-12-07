@@ -4,6 +4,7 @@ import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Utils;
 
 import java.util.Properties;
 
@@ -23,25 +24,34 @@ public class Producer extends Thread{
     //Create the Producer
     final KafkaProducer<String,String> producer = new KafkaProducer<String, String>(properties);
     //Create the ProducerRecord
-        ProducerRecord<String,String> record = new ProducerRecord<>("NewTopic","Titlu3","Mesaj2");
+        ProducerRecord<String,String> record = new ProducerRecord<>("NewTopic","nume","mesaj");
     //Send Data - Asynchronous
-    producer.send(record, new Callback() {
-        @Override
-        public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-            if(e==null){
-                logger.info("\nReceived record metadata\n" +
-                        "Topic"+ recordMetadata.topic() + ", Partition" + recordMetadata.partition()+", "+
-                "Offset"+recordMetadata.offset() + "@ Timestamp" + recordMetadata.timestamp()+"\n");
+        try {
+            while (true) {
+                producer.send(record, new Callback() {
+                    @Override
+                    public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                        if (e == null) {
+                            logger.info("\nReceived record metadata\n" +
+                                    "Topic" + recordMetadata.topic() + ", Partition" + recordMetadata.partition() + ", " +
+                                    "Offset" + recordMetadata.offset() + "@ Timestamp" + recordMetadata.timestamp() + "\n");
 //                System.out.println("Topic"+ recordMetadata.topic() + ", Partition" + recordMetadata.partition()+", "+
 //                        "Offset"+recordMetadata.offset() + "@ Timestamp" + recordMetadata.timestamp()+"\n");
+                        } else {
+                            logger.error("Error occured", e);
+                        }
+                    }
+                });
+                //flush and close producer
+                producer.flush();
+
+                  //  Utils.sleep(500);
+
+
             }
-            else{
-                logger.error("Error occured",e);
-            }
+        }finally {
+            producer.close();
         }
-    });
-    //flush and close producer
-        producer.flush();
-        producer.close();
+
     }
 }
