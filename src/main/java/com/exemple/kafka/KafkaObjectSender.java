@@ -3,6 +3,7 @@ package com.exemple.kafka;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import test.Client;
 
 import java.util.Properties;
 
@@ -20,7 +21,7 @@ public class KafkaObjectSender {
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 "org.apache.kafka.common.serialization.StringSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                "com.exemple.kafka.serializers.ClientSerializer");
+                "test.ClientSerializer");
         producer = new KafkaProducer<>(props);
     }
 

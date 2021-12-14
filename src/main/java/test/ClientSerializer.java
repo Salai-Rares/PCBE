@@ -1,6 +1,6 @@
-package com.exemple.kafka.serializers;
+package test;
 
-import com.exemple.kafka.Client;
+import test.Client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Serializer;
 

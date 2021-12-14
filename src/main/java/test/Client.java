@@ -1,13 +1,10 @@
-package com.exemple.kafka;
+package test;
 
-import com.exemple.kafka.serializers.ClientSerializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import com.exemple.kafka.AdminKafka;
+import com.exemple.kafka.ClientThreadMessageReceive;
+import com.exemple.kafka.KafkaMessageSender;
+import com.exemple.kafka.KafkaObjectSender;
 
-import java.io.Serializable;
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -16,17 +13,17 @@ import static utils.Utils.sleep;
 
 public class Client implements Runnable{
     //Client model
-    @JsonProperty
+   // @JsonProperty
     private String idClient ;
-    @JsonProperty
+   // @JsonProperty
     private String name;
-    @JsonProperty
+  //  @JsonProperty
     private List<String> topic;
 
     private AdminKafka adminKafka;
     private KafkaObjectSender kafkaObjectSender;
     private KafkaMessageSender kafkaMessageSender;
-    private Server server= Server.getInstanceOfServer();
+    //private Server server= Server.getInstanceOfServer();
     public Client(){
 
     }

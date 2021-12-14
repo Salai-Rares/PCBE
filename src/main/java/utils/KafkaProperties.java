@@ -2,6 +2,8 @@ package utils;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.LongDeserializer;
+import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
@@ -26,8 +28,8 @@ public class KafkaProperties {
         public static Properties getPropertiesSendUserMessages(){
             Properties properties = new Properties();
             properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServer);
-            properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-            properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,"com.exemple.kafka.serializers.ClientSerializer");
+            properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "com.exemple.kafka.serializers.UserSerializer");
+            properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, LongSerializer.class.getName());
             return properties;
         }
 
@@ -36,7 +38,7 @@ public class KafkaProperties {
             properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
             properties.put(ConsumerConfig.GROUP_ID_CONFIG, "group3");
             properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-            properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "com.exemple.kafka.deserializers.ClientDeserializer");
+            properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "com.exemple.kafka.deserializers.UserDeserializer");
             properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
             return properties;
         }
@@ -46,7 +48,7 @@ public class KafkaProperties {
             p.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
             p.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
             p.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-            p.setProperty(ConsumerConfig.GROUP_ID_CONFIG, group_id);
+
             p.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, offset_reset_config);
             return p;
         }

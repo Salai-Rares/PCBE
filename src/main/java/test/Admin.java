@@ -1,4 +1,4 @@
-package com.exemple.kafka;
+package test;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.CreateTopicsResult;

@@ -1,9 +1,5 @@
 package test;
 
-import com.exemple.kafka.vesion2.User;
-
-import java.util.Arrays;
-
 public class TestReferenece {
 
 
@@ -12,5 +8,9 @@ public class TestReferenece {
         //System.out.println(user.getPollingThread().getUser().getName()
 
       //  );
+
+        String a = "016 78967";
+        String[] m = a.split("-");
+        System.out.println(m[0]);
     }
 }

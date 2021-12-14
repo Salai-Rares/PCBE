@@ -1,24 +1,23 @@
 package com.exemple.kafka.deserializers;
 
-import com.exemple.kafka.Client;
+import com.exemple.kafka.User.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
 
-public class ClientDeserializer implements Deserializer<Client> {
-
+public class UserDeserializer implements Deserializer<User> {
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
 
     }
 
     @Override
-    public Client deserialize(String s, byte[] bytes) {
+    public User deserialize(String s, byte[] bytes) {
         ObjectMapper mapper = new ObjectMapper();
-        Client user = null;
+        User user = null;
         try {
-            user = mapper.readValue(bytes, Client.class);
+            user = mapper.readValue(bytes, User.class);
         } catch (Exception e) {
 
             e.printStackTrace();

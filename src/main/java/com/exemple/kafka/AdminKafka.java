@@ -22,7 +22,7 @@ public class AdminKafka {
         admin = org.apache.kafka.clients.admin.Admin.create(properties);
     }
 
-    public void createTopic(String topicName){
+    public boolean createTopic(String topicName){
         NewTopic newTopic = new NewTopic(topicName,numPartitions,replication_factor);
         CreateTopicsResult result = admin.createTopics(Collections.singleton(newTopic));
         KafkaFuture<Void> future = result.values().get(topicName);
@@ -30,7 +30,9 @@ public class AdminKafka {
             future.get();
         }catch (Exception e){
             System.out.println("The topic is already created");
+            return false;
         }
+        return  true;
     }
 
 
