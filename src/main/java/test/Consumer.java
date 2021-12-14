@@ -1,4 +1,4 @@
-package com.exemple.kafka;
+package test;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -15,18 +15,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import static utils.KafkaProperties.*;
+
 public class Consumer {
     private String name;
     final private KafkaConsumer<String,String> consumer;
     private List<String> topics;
     public Consumer(String name,List<String> topics){
-        final String bootstrapServer = "localhost:9092";
+
         Properties p = new Properties();
         p.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServer);
         p.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         p.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class.getName());
-        p.setProperty(ConsumerConfig.GROUP_ID_CONFIG,"java-group-consumer");
-        p.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
+        p.setProperty(ConsumerConfig.GROUP_ID_CONFIG,group_id);
+        p.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,offset_reset_config);
         this.name=name;
         this.topics = new ArrayList<>(topics);
         consumer=new KafkaConsumer<String, String>(p);
@@ -57,10 +59,14 @@ public class Consumer {
         consumer1.addSubscription(Arrays.asList("NewTopic","Animale"));
 
         while(true){
+            //Utils.sleep(1000);
             ConsumerRecords<String,String> records = consumer.poll(Duration.ofMillis(1000));
             for(ConsumerRecord consumerRecord:records){
-                System.out.println("Topic "+ consumerRecord.topic()+" Key "+consumerRecord.key()+" value "+consumerRecord.value());
+                System.out.print( "value "+consumerRecord.value());
+
             }
+
+            System.out.println("");
         }
 
     }
