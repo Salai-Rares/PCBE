@@ -1,4 +1,4 @@
-package com.exemple.kafka;
+package test;
 
 import test.Client;
 

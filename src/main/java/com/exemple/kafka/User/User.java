@@ -18,11 +18,11 @@ import static utils.Utils.sleep;
 public class User implements Runnable{
 
     //Client model
-    @JsonProperty
+
     private String idClient ;
-    @JsonProperty
+
     private String name;
-    @JsonProperty
+
     private List<String> topic;
 
     //Admin for dynamic creation of topics
@@ -53,10 +53,6 @@ public class User implements Runnable{
     }
 
 
-
-    public List<String> getTopic() {
-        return topic;
-    }
 
     public User(String name, List<String> listOfTopics){
         //Generate unique ID
@@ -91,8 +87,9 @@ public class User implements Runnable{
     private void receiveMessage(){
         while(true){
             try {
+
                 ConsumerRecords<String, String> records = consumerStringMessages.poll(Duration.ofMillis(1000));
-                sleep(1000);
+
                 for (ConsumerRecord consumerRecord : records) {
                     if (consumerRecord.key().equals("OnlineClients"))
                         System.out.println("Server: " + consumerRecord.value());

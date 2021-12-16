@@ -1,9 +1,7 @@
 package test;
 
 import com.exemple.kafka.AdminKafka;
-import com.exemple.kafka.ClientThreadMessageReceive;
 import com.exemple.kafka.KafkaMessageSender;
-import com.exemple.kafka.KafkaObjectSender;
 
 import java.util.List;
 import java.util.Objects;

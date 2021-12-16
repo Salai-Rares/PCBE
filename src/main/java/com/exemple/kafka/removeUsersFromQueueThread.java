@@ -4,6 +4,8 @@ import com.exemple.kafka.User.User;
 
 import java.util.Map;
 
+import static utils.Utils.sleep;
+
 public class removeUsersFromQueueThread implements Runnable{
     private OnlineUsers onlineUsers;
     public void proceesingUsers(User user){
@@ -21,6 +23,7 @@ public class removeUsersFromQueueThread implements Runnable{
 
     private void removeUsersFromQueue(){
         while(true){
+            sleep(1000);
             long currentTime = System.currentTimeMillis();
             for(Map.Entry<User,Long> userTimeStamp : onlineUsers.getOnlineClients().entrySet()){
                // System.out.println("Timp acum : " + currentTime + " " + "Timp din queue" + userTimeStamp.getValue());

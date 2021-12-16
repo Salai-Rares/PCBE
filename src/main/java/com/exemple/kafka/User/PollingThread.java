@@ -24,8 +24,8 @@ public class PollingThread implements Runnable{
 
 
 
-    private void sendObjectMessage(String topic,User key,Long user){
-        ProducerRecord<User, Long> record = new ProducerRecord<>(topic, key, user);
+    private void sendObjectMessage(String topic,User key,Long timestamp){
+        ProducerRecord<User, Long> record = new ProducerRecord<>(topic, key, timestamp);
         producerUserMessages.send(record);
         producerUserMessages.flush();
     }
