@@ -1,17 +1,20 @@
 package com.exemple.kafka;
 
 import com.exemple.kafka.User.User;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import utils.KafkaProperties;
 
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import static utils.Utils.onlineClientsResponse;
 
-public class Server extends KafkaMessageReceiver implements Runnable  {
+public class Server implements Runnable  {
 
 
     private  OnlineUsers onlineUsers;
@@ -19,12 +22,14 @@ public class Server extends KafkaMessageReceiver implements Runnable  {
     KafkaMessageSender kafkaMessageSender;
     KafkaConsumer<String,String> consumer ;
     public Server(OnlineUsers onlineUsers){
+        Properties properties = KafkaProperties.getPropertiesReceiveStringMessages();
+        properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG,"server_group_id");
       this.onlineUsers = onlineUsers;
-        consumer =  new KafkaConsumer<String, String>(p);
+        consumer =  new KafkaConsumer<String, String>(properties);
       kafkaMessageSender = new KafkaMessageSender();
     }
 
-    @Override
+
     public void receivedMessage(List<String> topics) {
 
         consumer.subscribe(topics);
@@ -40,6 +45,7 @@ public class Server extends KafkaMessageReceiver implements Runnable  {
                         stringBuilder.append(client.getName()).append("\n");
                     }
                     kafkaMessageSender.sendMessage(consumerRecord.key().toString(),"OnlineClients",stringBuilder.toString());
+
 
                 }
 
